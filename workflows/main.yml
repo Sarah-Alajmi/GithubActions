@@ -19,7 +19,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
           pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
