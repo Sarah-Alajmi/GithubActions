@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main  # Runs when code is pushed to the main branch
+      - problem/1  # Runs when code is pushed to the main branch
 
 jobs:
   lint:
