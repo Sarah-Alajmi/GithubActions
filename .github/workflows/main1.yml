@@ -1,1 +1,60 @@
-hi
+name: CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+ 
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install flake8
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Linter
+        run: flake8 .
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: lint  # Run tests only if linting succeeds
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: 
+          pip install pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Tests
+        run: pytest
+
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs: test  # Deploy only if tests pass
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Server
+        run: |
+          echo "Deploying application..."
+          # Add deployment commands here (e.g., SSH into a server and restart services)
