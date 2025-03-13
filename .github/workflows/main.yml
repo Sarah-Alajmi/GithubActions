@@ -1,6 +1,7 @@
 name: CI/CD Pipeline
 
-on:
+on: 
+  workflow_dispatch:
   push:
     branches:
       - main  # Runs when code is pushed to the main branch
